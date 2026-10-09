@@ -35,6 +35,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cycle.ui.theme.CycleTheme
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.ui.text.input.KeyboardType
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -126,13 +128,12 @@ fun DemoScreen(modifier: Modifier = Modifier) {
             label = { Text("Введите n (натуральное число)") },
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(16.dp),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number), // <-- добавлено
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = Color(0xFF27A6F5),
                 unfocusedBorderColor = Color(0xFFF268DC)
             )
         )
-
-        Spacer(modifier = Modifier.height(10.dp))
 
         OutlinedTextField(
             value = a,
@@ -140,6 +141,7 @@ fun DemoScreen(modifier: Modifier = Modifier) {
             label = { Text("Введите a (действительное число)") },
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(16.dp),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal), // <-- добавлено
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = Color(0xFF27A6F5),
                 unfocusedBorderColor = Color(0xFFF268DC)
@@ -167,7 +169,7 @@ fun DemoScreen(modifier: Modifier = Modifier) {
                         } else if (aValue == null) {
                             result = "Ошибка: введите корректное число для a!"
                         } else if (aValue == 0.0) {
-                            result = "Ошибка: a не может быть равно 0 (деление на ноль)!"
+                            result = "Ошибка: a не может быть равно 0 (деление на ноль запрещено)!"
                         } else {
 
 //                            val resFor = calculateFor(nValue, aValue)

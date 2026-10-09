@@ -50,15 +50,15 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-fun calculateFor(n: Int, a: Double): String {
-    var sum = 0.0
-    var denominator = 1.0
-    for (k in 0..n) {
-        denominator *= (a + k)
-        sum += 1.0 / denominator
-    }
-    return "for: S = $sum"
-}
+//fun calculateFor(n: Int, a: Double): String {
+//    var sum = 0.0
+//    var denominator = 1.0
+//    for (k in 0..n) {
+//        denominator *= (a + k)
+//        sum += 1.0 / denominator
+//    }
+//    return "S = $sum"
+//}
 
 fun calculateWhile(n: Int, a: Double): String {
     var sum = 0.0
@@ -69,20 +69,20 @@ fun calculateWhile(n: Int, a: Double): String {
         sum += 1.0 / denominator
         k++
     }
-    return "while: S = $sum"
+    return "S = ${"%.4f".format(sum)}"
 }
 
-fun calculateDoWhile(n: Int, a: Double): String {
-    var sum = 0.0
-    var denominator = 1.0
-    var k = 0
-    do {
-        denominator *= (a + k)
-        sum += 1.0 / denominator
-        k++
-    } while (k <= n)
-    return "do-while: S = $sum"
-}
+//fun calculateDoWhile(n: Int, a: Double): String {
+//    var sum = 0.0
+//    var denominator = 1.0
+//    var k = 0
+//    do {
+//        denominator *= (a + k)
+//        sum += 1.0 / denominator
+//        k++
+//    } while (k <= n)
+//    return "S = $sum"
+//}
 
 @Composable
 fun DemoText(message: String, fontSize: TextUnit) {
@@ -170,10 +170,11 @@ fun DemoScreen(modifier: Modifier = Modifier) {
                             result = "Ошибка: a не может быть равно 0 (деление на ноль)!"
                         } else {
 
-                            val resFor = calculateFor(nValue, aValue)
+//                            val resFor = calculateFor(nValue, aValue)
                             val resWhile = calculateWhile(nValue, aValue)
-                            val resDoWhile = calculateDoWhile(nValue, aValue)
-                            result = "$resFor\n$resWhile\n$resDoWhile"
+//                            val resDoWhile = calculateDoWhile(nValue, aValue)
+//                            result = "$resFor\n$resWhile\n$resDoWhile"
+                            result = "$resWhile"
                         }
                     }
                 },

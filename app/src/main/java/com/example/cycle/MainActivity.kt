@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cycle.ui.theme.CycleTheme
+import androidx.compose.foundation.layout.Row
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +50,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-// Функция вычисления через for (цикл for из Sh01)
 fun calculateFor(n: Int, a: Double): String {
     var sum = 0.0
     var denominator = 1.0
@@ -60,7 +60,6 @@ fun calculateFor(n: Int, a: Double): String {
     return "for: S = $sum"
 }
 
-// Функция вычисления через while (цикл while из Sh01)
 fun calculateWhile(n: Int, a: Double): String {
     var sum = 0.0
     var denominator = 1.0
@@ -73,7 +72,6 @@ fun calculateWhile(n: Int, a: Double): String {
     return "while: S = $sum"
 }
 
-// Функция вычисления через do-while (цикл do-while из Sh01)
 fun calculateDoWhile(n: Int, a: Double): String {
     var sum = 0.0
     var denominator = 1.0
@@ -122,7 +120,6 @@ fun DemoScreen(modifier: Modifier = Modifier) {
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        // Поле ввода n
         OutlinedTextField(
             value = n,
             onValueChange = { n = it },
@@ -137,7 +134,6 @@ fun DemoScreen(modifier: Modifier = Modifier) {
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        // Поле ввода a
         OutlinedTextField(
             value = a,
             onValueChange = { a = it },
@@ -152,39 +148,63 @@ fun DemoScreen(modifier: Modifier = Modifier) {
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        // Кнопка "Вычислить"
-        Button(
-            onClick = {
-                if (n.isEmpty() || a.isEmpty()) {
-                    result = "Заполните оба поля!"
-                } else {
-                    val nValue = n.toIntOrNull()
-                    val aValue = a.replace(",", ".").toDoubleOrNull()
-                    if (nValue == null || nValue < 0) {
-                        result = "Ошибка: n должно быть натуральным числом!"
-                    } else if (aValue == null) {
-                        result = "Ошибка: введите корректное число для a!"
-                    } else {
-                        // Вызываем все три функции
-                        val resFor = calculateFor(nValue, aValue)
-                        val resWhile = calculateWhile(nValue, aValue)
-                        val resDoWhile = calculateDoWhile(nValue, aValue)
-                        result = "$resFor\n$resWhile\n$resDoWhile"
-                    }
-                }
-            },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFF27A6F5),
-                contentColor = Color.White
-            ),
-            modifier = Modifier.fillMaxWidth()
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            Text("Вычислить", fontSize = 18.sp)
+
+            Button(
+                onClick = {
+                    if (n.isEmpty() || a.isEmpty()) {
+                        result = "Заполните оба поля!"
+                    } else {
+                        val nValue = n.toIntOrNull()
+                        val aValue = a.replace(",", ".").toDoubleOrNull()
+
+                        if (nValue == null || nValue < 0) {
+                            result = "Ошибка: n должно быть натуральным числом!"
+                        } else if (aValue == null) {
+                            result = "Ошибка: введите корректное число для a!"
+                        } else if (aValue == 0.0) {
+                            result = "Ошибка: a не может быть равно 0 (деление на ноль)!"
+                        } else {
+
+                            val resFor = calculateFor(nValue, aValue)
+                            val resWhile = calculateWhile(nValue, aValue)
+                            val resDoWhile = calculateDoWhile(nValue, aValue)
+                            result = "$resFor\n$resWhile\n$resDoWhile"
+                        }
+                    }
+                },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF27A6F5),
+                    contentColor = Color.White
+                ),
+                modifier = Modifier.weight(1f) // Занимает половину ширины
+            ) {
+                Text("Вычислить", fontSize = 16.sp)
+            }
+
+
+            Button(
+                onClick = {
+                    n = ""
+                    a = ""
+                    result = ""
+                },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFFF268DC),
+                    contentColor = Color.White
+                ),
+                modifier = Modifier.weight(1f)
+            ) {
+                Text("Очистить", fontSize = 16.sp)
+            }
         }
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        // Вывод результата (рамка появляется только если есть результат)
         if (result.isNotEmpty()) {
             Text(
                 text = result,
